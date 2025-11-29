@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+      <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WWQWKGX9');</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অর্ডার কনফার্মড | ম্যাংগো গার্ডেন</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&display=swap');
+        body { font-family: 'Hind Siliguri', sans-serif; background-color: #f3f4f6; }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-center border-t-8 border-green-600">
+        
+        <div class="mb-6">
+            <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto animate-bounce">
+                <i class="fas fa-check-circle text-5xl text-green-600"></i>
+            </div>
+        </div>
+
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">ধন্যবাদ! 🎉</h1>
+        <p class="text-lg text-green-700 font-semibold mb-4">আপনার অর্ডারটি সফলভাবে কনফার্ম হয়েছে।</p>
+        
+        <p class="text-gray-500 text-sm mb-6">
+            আমাদের প্রতিনিধি শীঘ্রই আপনার দেওয়া নম্বরে কল করে বিস্তারিত জানাবেন।
+        </p>
+
+        <div class="bg-gray-50 rounded-xl p-4 mb-6 text-left border border-gray-100">
+            <div class="flex justify-between mb-2">
+                <span class="text-gray-500 text-sm">অর্ডার আইডি:</span>
+                <span class="font-mono font-bold text-gray-800" id="order-id">...</span>
+            </div>
+            <div class="flex justify-between mb-2">
+                <span class="text-gray-500 text-sm">গ্রাহকের নাম:</span>
+                <span class="font-bold text-gray-800" id="customer-name">...</span>
+            </div>
+            <div class="border-t border-dashed border-gray-300 my-2"></div>
+            <div class="flex justify-between">
+                <span class="text-gray-600 font-bold">মোট বিল:</span>
+                <span class="text-green-700 font-bold text-lg" id="total-amount">...</span>
+            </div>
+        </div>
+
+        <a href="index.html" class="block w-full bg-green-600 text-white font-bold py-3 rounded-lg hover:bg-green-700 transition shadow-lg">
+            <i class="fas fa-arrow-left mr-2"></i> আরও কেনাকাটা করুন
+        </a>
+    </div>
+
+    <script>
+        // URL থেকে ডাটা নিয়ে পেজে দেখানো
+        const urlParams = new URLSearchParams(window.location.search);
+        document.getElementById('order-id').innerText = urlParams.get('id') || 'N/A';
+        document.getElementById('customer-name').innerText = urlParams.get('name') || 'Guest';
+        document.getElementById('total-amount').innerText = urlParams.get('total') || '৳ 0';
+        
+        // Optional: Clear Cart when seeing this page
+        localStorage.removeItem('cart'); 
+    </script>
+
+</body>
+</html>

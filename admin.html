@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অ্যাডমিন প্যানেল | ম্যাংগো গার্ডেন</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&display=swap');
+        body { font-family: 'Hind Siliguri', sans-serif; background-color: #f3f4f6; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div id="login-section" class="min-h-screen flex items-center justify-center">
+        <div class="bg-white p-8 rounded-xl shadow-2xl w-96 border-t-4 border-green-600">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-green-100 text-green-700 rounded-full flex items-center justify-center text-2xl mx-auto mb-2">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800">অ্যাডমিন লগইন</h2>
+                <p class="text-sm text-gray-500">ম্যাংগো গার্ডেন ড্যাশবোর্ড</p>
+            </div>
+            <form onsubmit="handleLogin(event)">
+                <div class="mb-4">
+                    <label class="block text-gray-600 text-sm font-bold mb-2">ইউজারনেম</label>
+                    <input type="text" id="username" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="admin">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-600 text-sm font-bold mb-2">পাসওয়ার্ড</label>
+                    <input type="password" id="password" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="1234">
+                </div>
+                <button type="submit" class="w-full bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 transition">
+                    লগইন করুন
+                </button>
+                <p id="error-msg" class="text-red-500 text-xs mt-3 text-center hidden">ভুল ইউজারনেম বা পাসওয়ার্ড!</p>
+            </form>
+        </div>
+    </div>
+
+    <div id="dashboard-section" class="hidden min-h-screen flex flex-col">
+        <nav class="bg-green-700 text-white p-4 shadow-md flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <i class="fas fa-tree text-xl text-yellow-400"></i>
+                <h1 class="text-xl font-bold">ম্যাংগো গার্ডেন অ্যাডমিন</h1>
+            </div>
+            <button onclick="logout()" class="bg-red-500 hover:bg-red-600 px-4 py-1.5 rounded-lg text-sm font-bold">
+                <i class="fas fa-sign-out-alt"></i> লগআউট
+            </button>
+        </nav>
+
+        <div class="flex flex-1 overflow-hidden">
+            <aside class="w-64 bg-white shadow-md hidden md:block">
+                <div class="p-6">
+                    <ul class="space-y-4">
+                        <li class="flex items-center gap-3 text-green-700 font-bold bg-green-50 p-3 rounded-lg cursor-pointer">
+                            <i class="fas fa-shopping-bag"></i> সকল অর্ডার
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-600 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
+                            <i class="fas fa-users"></i> কাস্টমার লিস্ট
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-600 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
+                            <i class="fas fa-cog"></i> সেটিংস
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+
+            <main class="flex-1 p-6 overflow-y-auto">
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-blue-500 flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-500 text-sm">মোট অর্ডার</p>
+                            <h3 class="text-2xl font-bold text-gray-800" id="total-orders">0</h3>
+                        </div>
+                        <i class="fas fa-shopping-cart text-3xl text-blue-200"></i>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-green-500 flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-500 text-sm">মোট বিক্রি (টাকা)</p>
+                            <h3 class="text-2xl font-bold text-gray-800" id="total-revenue">৳ 0</h3>
+                        </div>
+                        <i class="fas fa-bangladeshi-taka-sign text-3xl text-green-200"></i>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-yellow-500 flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-500 text-sm">পেন্ডিং অর্ডার</p>
+                            <h3 class="text-2xl font-bold text-gray-800" id="pending-orders">0</h3>
+                        </div>
+                        <i class="fas fa-clock text-3xl text-yellow-200"></i>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="p-4 border-b border-gray-100 flex justify-between items-center">
+                        <h3 class="text-lg font-bold text-gray-800">সাম্প্রতিক অর্ডার সমূহ</h3>
+                        <button onclick="clearAllData()" class="text-red-500 text-xs hover:underline">সব ডিলিট করুন</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-gray-50 text-gray-600 text-sm uppercase">
+                                    <th class="p-4">অর্ডার আইডি</th>
+                                    <th class="p-4">কাস্টমার নাম</th>
+                                    <th class="p-4">ফোন নম্বর</th>
+                                    <th class="p-4">ঠিকানা</th>
+                                    <th class="p-4">পণ্য তালিকা</th>
+                                    <th class="p-4">মোট বিল</th>
+                                    <th class="p-4">স্ট্যাটাস</th>
+                                    <th class="p-4 text-center">অ্যাকশন</th>
+                                </tr>
+                            </thead>
+                            <tbody id="order-table-body" class="text-sm text-gray-700 divide-y divide-gray-100">
+                                </tbody>
+                        </table>
+                    </div>
+                    <div id="no-data-msg" class="p-8 text-center text-gray-400 hidden">
+                        কোনো অর্ডার পাওয়া যায়নি।
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // --- ADMIN CREDENTIALS ---
+        const ADMIN_USER = "admin";
+        const ADMIN_PASS = "1234";
+
+        // Login Handler
+        function handleLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+
+            if(user === ADMIN_USER && pass === ADMIN_PASS) {
+                document.getElementById('login-section').classList.add('hidden');
+                document.getElementById('dashboard-section').classList.remove('hidden');
+                loadDashboardData();
+            } else {
+                document.getElementById('error-msg').classList.remove('hidden');
+            }
+        }
+
+        function logout() {
+            location.reload();
+        }
+
+        // Load Data from LocalStorage
+        function loadDashboardData() {
+            const orders = JSON.parse(localStorage.getItem('mango_orders')) || [];
+            const tableBody = document.getElementById('order-table-body');
+            const noDataMsg = document.getElementById('no-data-msg');
+            
+            // Update Stats
+            document.getElementById('total-orders').innerText = orders.length;
+            
+            // Calculate Total Revenue (Simple sum parsing)
+            let totalRev = 0;
+            orders.forEach(order => {
+                // remove non-numeric chars for calculation
+                let amount = parseFloat(order.total.replace(/[^\d.]/g, '')) || 0;
+                totalRev += amount;
+            });
+            document.getElementById('total-revenue').innerText = '৳ ' + totalRev.toLocaleString();
+            document.getElementById('pending-orders').innerText = orders.length; // Assuming all are pending for now
+
+            // Populate Table
+            tableBody.innerHTML = '';
+            if(orders.length === 0) {
+                noDataMsg.classList.remove('hidden');
+                return;
+            } else {
+                noDataMsg.classList.add('hidden');
+            }
+
+            // Reverse to show latest first
+            orders.reverse().forEach((order, index) => {
+                const itemsString = order.items.map(i => `${i.name} (x1)`).join(', ');
+                
+                const row = `
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="p-4 font-mono text-xs text-blue-600 font-bold">#${order.id || 'N/A'}</td>
+                        <td class="p-4 font-bold">${order.name}</td>
+                        <td class="p-4"><a href="tel:${order.phone}" class="hover:text-green-600">${order.phone}</a></td>
+                        <td class="p-4 max-w-xs truncate" title="${order.address}">${order.address}</td>
+                        <td class="p-4 max-w-xs truncate text-xs text-gray-500" title="${itemsString}">${itemsString}</td>
+                        <td class="p-4 font-bold text-green-700">${order.total}</td>
+                        <td class="p-4">
+                            <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs font-bold">Pending</span>
+                        </td>
+                        <td class="p-4 text-center">
+                            <button onclick="deleteOrder(${index})" class="text-red-500 hover:text-red-700 p-2" title="Delete">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        function deleteOrder(index) {
+            if(confirm("আপনি কি নিশ্চিত এই অর্ডারটি ডিলিট করতে চান?")) {
+                let orders = JSON.parse(localStorage.getItem('mango_orders')) || [];
+                // Since we reversed display, we need to handle index carefully. 
+                // Better approach: Just reverse logic or reload.
+                // Simplified for this demo:
+                orders.reverse(); // Back to original order
+                orders.splice(index, 1); // Remove
+                localStorage.setItem('mango_orders', JSON.stringify(orders));
+                loadDashboardData();
+            }
+        }
+
+        function clearAllData() {
+            if(confirm("সতর্কতা: সকল অর্ডারের তথ্য মুছে যাবে! আপনি কি নিশ্চিত?")) {
+                localStorage.removeItem('mango_orders');
+                loadDashboardData();
+            }
+        }
+    </script>
+</body>
+</html>

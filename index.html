@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="bn" class="scroll-smooth">
+<head>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WWQWKGX9');</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ম্যাংগো গার্ডেন | উইন্টার স্পেশাল কম্বো</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+            overflow-x: hidden;
+        }
+
+        /* --- Color Palette --- */
+        .text-mango { color: #f59e0b; }
+        .bg-mango { background-color: #f59e0b; }
+        .text-leaf { color: #16a34a; }
+        .bg-leaf { background-color: #16a34a; }
+        
+        /* Product Card Styles */
+        .product-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.15);
+            border-color: #16a34a;
+        }
+        
+        /* Button Styles */
+        .btn-add-cart {
+            background-color: #f3f4f6;
+            color: #1f2937;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .product-card:hover .btn-add-cart {
+            background-color: #16a34a;
+            color: white;
+            box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+        }
+
+        .btn-primary {
+            background-color: #16a34a;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #15803d;
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(21, 128, 61, 0.4);
+        }
+
+        /* Cart Box Style */
+        .cart-box {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        /* Custom List Bullet */
+        .combo-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+            color: #4b5563;
+        }
+        .combo-list li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: #16a34a;
+            font-size: 0.8rem;
+            top: 4px;
+        }
+        
+        /* Disabled Input Style */
+        .disabled-input {
+            background-color: #f9fafb;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        /* --- Animations (Fade In Up) --- */
+        .reveal {
+            position: relative;
+            transform: translateY(50px);
+            opacity: 0;
+            transition: all 0.8s ease;
+        }
+        .reveal.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Mobile Menu Animation */
+        #mobile-menu {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        #mobile-menu.open {
+            max-height: 300px;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="antialiased flex flex-col min-h-screen">
+
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WWQWKGX9"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+    <nav class="bg-white sticky top-0 z-50 shadow-md border-b border-gray-100 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a href="#" class="flex items-center gap-2 group">
+                    <div class="w-16 h-16 flex items-center justify-center text-green-600 text-xl transform group-hover:rotate-12 transition duration-300">
+                        <img src="assests/logo.png" alt="Logo" class="w-full h-full object-contain">
+                    </div>
+                </a>
+
+                <div class="hidden md:flex space-x-8 font-medium text-gray-600">
+                    <a href="#home" class="font-bold hover:text-leaf transition relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-leaf after:transition-all hover:after:w-full">হোম</a>
+                    <a href="#products" class="font-bold hover:text-leaf transition relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-leaf after:transition-all hover:after:w-full">কম্বো অফার</a>
+                    <a href="#cart-section" class="font-bold hover:text-leaf transition relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-leaf after:transition-all hover:after:w-full">অর্ডার লিস্ট</a>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <div class="relative cursor-pointer group" onclick="document.getElementById('cart-section').scrollIntoView({behavior: 'smooth'})">
+                        <div class="p-2.5 bg-gray-50 rounded-full group-hover:bg-green-100 transition duration-300">
+                            <i class="fas fa-shopping-basket text-xl text-gray-600 group-hover:text-leaf"></i>
+                        </div>
+                        <span id="cart-count" class="absolute -top-1 -right-1 bg-mango text-white text-xs font-bold h-5 w-5 flex items-center justify-center rounded-full border-2 border-white shadow-sm transform group-hover:scale-110 transition">0</span>
+                    </div>
+
+                    <button id="mobile-menu-btn" class="md:hidden p-2 rounded-md text-gray-600 hover:text-leaf focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="md:hidden bg-white border-t border-gray-100 shadow-lg">
+            <div class="px-4 pt-2 pb-4 space-y-1">
+                <a href="#home" onclick="toggleMobileMenu()" class="block px-3 py-3 rounded-md text-base font-bold text-gray-700 hover:text-leaf hover:bg-green-50">হোম</a>
+                <a href="#products" onclick="toggleMobileMenu()" class="block px-3 py-3 rounded-md text-base font-bold text-gray-700 hover:text-leaf hover:bg-green-50">কম্বো অফার</a>
+                <a href="#cart-section" onclick="toggleMobileMenu()" class="block px-3 py-3 rounded-md text-base font-bold text-gray-700 hover:text-leaf hover:bg-green-50">অর্ডার লিস্ট</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="bg-[#FFFBF0] py-12 md:py-20 border-b border-gray-100 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col-reverse md:flex-row items-center gap-10">
+         <section id="home" class="bg-[#FFFBF0] py-12 md:py-20 border-b border-gray-100 overflow-hidden relative">
+        <div class="absolute top-20 left-0 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
+        <div class="absolute bottom-20 right-1/2 w-72 h-72 bg-green-300 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-2000"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col-reverse md:flex-row items-center gap-10">
+            
+            <div class="md:w-1/2 text-center md:text-left space-y-6 reveal active z-10">
+                
+                <span class="inline-flex items-center gap-2 bg-white text-leaf px-4 py-1.5 rounded-full text-sm font-bold shadow-sm border border-green-100 mb-2 animate-bounce">
+                    <i class="fas fa-snowflake text-blue-400"></i> শীতের স্পেশাল কম্বো প্যাক
+                </span>
+
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+                    পুরো পরিবারের জন্য <br> <span class="text-mango">বিশুদ্ধ গুড়ের আয়োজন</span>
+                </h1>
+
+                <div class="flex flex-wrap justify-center md:justify-start gap-3 my-4">
+                    <div class="flex items-center gap-2 bg-white px-3 py-2 rounded-lg border border-green-100 shadow-sm">
+                        <i class="fas fa-check-circle text-leaf"></i>
+                        <span class="text-sm font-semibold text-gray-600">১০০% কেমিক্যাল মুক্ত</span>
+                    </div>
+                    <div class="flex items-center gap-2 bg-white px-3 py-2 rounded-lg border border-green-100 shadow-sm">
+                        <i class="fas fa-hand-holding-usd text-leaf"></i>
+                        <span class="text-sm font-semibold text-gray-600">ক্যাশ অন ডেলিভারি</span>
+                    </div>
+                    <div class="flex items-center gap-2 bg-white px-3 py-2 rounded-lg border border-green-100 shadow-sm">
+                        <i class="fas fa-box-open text-leaf"></i>
+                        <span class="text-sm font-semibold text-gray-600">দেখে নেওয়ার সুযোগ</span>
+                    </div>
+                </div>
+
+                <p class="text-gray-600 text-lg leading-relaxed">
+                    শীতের পিঠাপুলির সব আয়োজন এখন এক প্যাকেজে! আমাদের স্পেশাল কম্বো প্যাকগুলো সাজানো হয়েছে আপনার পরিবারের প্রত্যেকের স্বাদের কথা ভেবে।
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-2">
+                    <a href="#products" class="btn-primary px-8 py-4 rounded-full font-bold shadow-lg hover:shadow-xl transform transition flex items-center justify-center gap-2">
+                        কম্বো দেখুন <i class="fas fa-arrow-down animate-bounce"></i>
+                    </a>
+                    <a href="tel:01318007554" class="px-8 py-4 rounded-full font-bold border-2 border-green-600 text-green-700 hover:bg-green-50 transition flex items-center justify-center gap-2">
+                        <i class="fas fa-phone-alt"></i> কল করুন
+                    </a>
+                </div>
+
+                <div class="mt-8 pt-6 border-t border-gray-200 flex flex-col sm:flex-row items-center gap-5 justify-center md:justify-start">
+                    <div class="flex -space-x-4">
+                        <img class="w-10 h-10 rounded-full border-2 border-white shadow-sm" src="https://i.pravatar.cc/100?img=12" alt="User">
+                        <img class="w-10 h-10 rounded-full border-2 border-white shadow-sm" src="https://i.pravatar.cc/100?img=32" alt="User">
+                        <img class="w-10 h-10 rounded-full border-2 border-white shadow-sm" src="https://i.pravatar.cc/100?img=5" alt="User">
+                        <div class="w-10 h-10 rounded-full border-2 border-white bg-green-100 flex items-center justify-center text-xs font-bold text-green-700 shadow-sm">+1k</div>
+                    </div>
+                    <div class="text-center sm:text-left">
+                        <div class="flex text-yellow-400 text-sm gap-1 justify-center sm:justify-start">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-sm text-gray-500 font-medium"><span class="font-bold text-gray-800">১,২০০+</span> মানুষ আমাদের গুড় পছন্দ করেছেন</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="md:w-1/2 relative reveal active">
+                <div class="absolute inset-0 bg-yellow-200 rounded-full filter blur-3xl opacity-20 animate-pulse"></div>
+                <img src="assests/hero-section.jpeg" alt="Khejur Gur" class="relative z-10 w-full rounded-2xl shadow-2xl border-4 border-white transform hover:rotate-1 transition duration-700 hover:scale-[1.02]">
+                
+                <div class="absolute -bottom-5 -left-5 md:bottom-10 md:-left-10 bg-white p-4 rounded-xl shadow-xl z-20 border-l-4 border-mango animate-bounce duration-[3000ms]">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-yellow-100 p-3 rounded-full text-mango">
+                            <i class="fas fa-award text-2xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500 font-bold">প্রিমিয়াম কোয়ালিটি</p>
+                            <p class="text-lg font-bold text-gray-800">রাজশাহীর সেরা</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+            <div class="md:w-1/2 relative reveal active">
+                <div class="absolute inset-0 bg-yellow-200 rounded-full filter blur-3xl opacity-20 animate-pulse"></div>
+                <img src="assests/hero.jpeg" alt="Khejur Gur" class="relative z-10 w-full rounded-2xl shadow-2xl border-4 border-white transform hover:rotate-1 transition duration-700 hover:scale-[1.02]">
+            </div>
+        </div>
+    </section>
+
+    <section id="products" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-3">সেরা কম্বো প্যাকেজ</h2>
+                <div class="w-24 h-1 bg-mango mx-auto rounded-full"></div>
+                <p class="text-gray-500 mt-4">ফ্রি হোম ডেলিভারি সহ সেরা ডিলগুলো বেছে নিন</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <div class="reveal delay-100">
+                    <div class="product-card group p-5 h-full">
+                        <div class="relative h-64 bg-gray-50 rounded-xl mb-4 overflow-hidden flex items-center justify-center">
+                            <span class="absolute top-3 right-3 bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow z-10">বাজেট সেভার</span>
+                            <div class="absolute bottom-3 left-3 bg-leaf text-white text-[10px] font-bold px-2 py-1 rounded shadow z-10">
+                                <i class="fas fa-truck"></i> ফ্রি ডেলিভারি
+                            </div>
+                            <img src="assests/patali.jpeg" alt="Patali Gur" loading="lazy" class="h-full w-full object-cover group-hover:scale-110 transition duration-700">
+                        </div>
+                        
+                        <h3 class="font-bold text-xl text-gray-800 mb-2">Combo ১ - ২ কেজি পাটালি গুড়</h3>
+                        <p class="text-xs text-gray-500 mb-3 italic">শীতের পিঠা, চা, চাটনি সবকিছুতেই অদ্বিতীয় ঘ্রাণ।</p>
+                        
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-100 mb-4 flex-grow">
+                            <ul class="combo-list space-y-2">
+                                <li>২ কেজি খাঁটি পাটালি গুড়</li>
+                            </ul>
+                        </div>
+
+                        <div class="mt-auto">
+                            <div class="flex items-center gap-2 mb-4 justify-center">
+                                <span class="text-3xl font-bold text-leaf">৳ ৭৮০</span>
+                                <span class="text-sm text-gray-400 font-medium"> (নেট প্রাইস)</span>
+                            </div>
+                            <button onclick="addToCart('c1', 'Combo 1 - ২ কেজি পাটালি', 780)" class="btn-add-cart w-full py-3 rounded-lg flex items-center justify-center gap-2 transform active:scale-95">
+                                <i class="fas fa-cart-plus"></i> অর্ডার করুন
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal delay-200">
+                    <div class="product-card group p-5 border-yellow-400 border-2 relative h-full shadow-xl">
+                        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white text-xs font-bold px-4 py-1 rounded-full shadow-lg z-20 animate-pulse">
+                            🔥 বেস্ট সেলার
+                        </div>
+
+                        <div class="relative h-64 bg-gray-50 rounded-xl mb-4 overflow-hidden flex items-center justify-center">
+                            <div class="absolute bottom-3 left-3 bg-leaf text-white text-[10px] font-bold px-2 py-1 rounded shadow z-10">
+                                <i class="fas fa-truck"></i> ফ্রি ডেলিভারি
+                            </div>
+                            <img src="assests/combo1.jpeg" alt="Mixed Combo" loading="lazy" class="h-full w-full object-cover group-hover:scale-110 transition duration-700">
+                        </div>
+                        
+                        <h3 class="font-bold text-xl text-gray-800 mb-2">Combo ২ - ফ্যামিলি মিক্সড প্যাক</h3>
+                        <p class="text-xs text-gray-500 mb-3 italic">এক পরিবারের সব পছন্দ এক প্যাকে।</p>
+                        
+                        <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-100 mb-4 flex-grow">
+                            <ul class="combo-list space-y-2">
+                                <li>১ কেজি ফয়েল পাটালি</li>
+                                <li>৫০০ গ্রাম ঝোলা গুড়</li>
+                                <li>৫০০ গ্রাম গোল পাটালি</li>
+                                <li>৫০০ গ্রাম চকলেট গুড়</li>
+                            </ul>
+                        </div>
+
+                        <div class="mt-auto">
+                            <div class="flex items-center gap-2 mb-4 justify-center">
+                                <span class="text-3xl font-bold text-leaf">৳ ১,০৫০</span>
+                                <span class="text-sm text-gray-400 line-through">৳ ১,৩০০</span>
+                            </div>
+                            <button onclick="addToCart('c2', 'Combo 2 - ফ্যামিলি মিক্সড', 1050)" class="btn-primary w-full py-3 rounded-lg flex items-center justify-center gap-2 shadow-lg hover:shadow-green-300/50 transform active:scale-95">
+                                <i class="fas fa-cart-plus"></i> অর্ডার করুন
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal delay-300">
+                    <div class="product-card group p-5 h-full">
+                        <div class="relative h-64 bg-gray-50 rounded-xl mb-4 overflow-hidden flex items-center justify-center">
+                            <span class="absolute top-3 right-3 bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow z-10">প্রিমিয়াম</span>
+                            <div class="absolute bottom-3 left-3 bg-leaf text-white text-[10px] font-bold px-2 py-1 rounded shadow z-10">
+                                <i class="fas fa-truck"></i> ফ্রি ডেলিভারি
+                            </div>
+                            <img src="assests/WhatsApp Image 2025-11-29 at 2.18.36 AM.jpeg" alt="Full Family Combo" loading="lazy" class="h-full w-full object-cover group-hover:scale-110 transition duration-700">
+                        </div>
+                        
+                        <h3 class="font-bold text-xl text-gray-800 mb-2">Combo ৩ - ফুল ফ্যামিলি স্পেশাল</h3>
+                        <p class="text-xs text-gray-500 mb-3 italic">এক প্যাকেজেই পুরো শীতের পিঠাপুলি প্রস্তুত।</p>
+                        
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-100 mb-4 flex-grow">
+                            <ul class="combo-list space-y-2">
+                                <li>১ কেজি ফয়েল পাটালি গুড়</li>
+                                <li>১ কেজি ঝোলা গুড়</li>
+                                <li>১ কেজি বীজ/চকলেট গুড়</li>
+                                <li>৫০০ গ্রাম গোল পাটালি গুড়</li>
+                            </ul>
+                        </div>
+
+                        <div class="mt-auto">
+                            <div class="flex items-center gap-2 mb-4 justify-center">
+                                <span class="text-3xl font-bold text-leaf">৳ ১,৫০০</span>
+                                <span class="text-sm text-gray-400 line-through">৳ ১,৮০০</span>
+                            </div>
+                            <button onclick="addToCart('c3', 'Combo 3 - ফুল ফ্যামিলি স্পেশাল', 1500)" class="btn-add-cart w-full py-3 rounded-lg flex items-center justify-center gap-2 transform active:scale-95">
+                                <i class="fas fa-cart-plus"></i> অর্ডার করুন
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="cart-section" class="py-16 bg-[#ebfcf0] border-t border-green-100 reveal">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-8 text-gray-800 text-center flex items-center justify-center gap-3">
+                <i class="fas fa-file-invoice text-leaf animate-pulse"></i> অর্ডার সম্পন্ন করুন
+            </h2>
+            
+            <div class="cart-box flex flex-col md:flex-row bg-white rounded-xl shadow-xl overflow-hidden">
+                
+                <div class="md:w-1/2 p-6 md:p-8 bg-white border-r border-gray-100">
+                    <h3 class="text-lg font-bold text-gray-700 border-b pb-3 mb-4">আপনার কার্ট</h3>
+                    
+                    <div id="cart-items-container" class="space-y-3 min-h-[150px] transition-all duration-300">
+                        <div class="flex flex-col items-center justify-center h-40 text-gray-400">
+                            <i class="fas fa-basket-shopping text-4xl mb-2 opacity-50 text-leaf"></i>
+                            <p>আপনার কার্ট বর্তমানে খালি</p>
+                            <p class="text-sm">পছন্দের কম্বো অর্ডার করতে উপরে দেখুন</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 bg-gray-50 p-4 rounded-lg">
+                        <div class="space-y-2 text-sm text-gray-600">
+                            <div class="flex justify-between">
+                                <span>সাবটোটাল</span>
+                                <span id="subtotal" class="font-bold text-gray-800">৳ 0</span>
+                            </div>
+                            <div class="flex justify-between text-green-600 transition-all duration-300" id="discount-row" style="display:none;">
+                                <span>ডিসকাউন্ট</span>
+                                <span id="discount-val">- ৳ 0</span>
+                            </div>
+                            <div class="flex justify-between text-leaf font-semibold">
+                                <span>ডেলিভারি চার্জ</span>
+                                <span class="bg-green-100 px-2 rounded">ফ্রি!</span>
+                            </div>
+                            <div class="border-t border-dashed border-gray-300 my-2"></div>
+                            <div class="flex justify-between text-xl font-bold text-leaf">
+                                <span>সর্বমোট বিল</span>
+                                <span id="final-total">৳ 0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <div class="flex mt-1">
+                            <input type="text" id="coupon-code-input" placeholder="কুপন কোড (যদি থাকে)" class="w-full border border-gray-300 rounded-l px-3 py-2 text-sm outline-none focus:border-green-500 uppercase transition">
+                            <button onclick="applyCoupon()" class="bg-gray-800 text-white px-3 py-2 rounded-r text-sm hover:bg-black transition transform active:scale-95">Apply</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:w-1/2 p-6 md:p-8 bg-gray-50">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-green-100 text-leaf rounded-full flex items-center justify-center text-lg">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">ডেলিভারি ঠিকানা দিন</h3>
+                    </div>
+
+                    <form id="order-form" onsubmit="submitOrder(event)" class="transition-opacity duration-300">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">আপনার নাম</label>
+                                <input type="text" name="name" id="input-name" required class="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 bg-white disabled:bg-gray-200 disabled:cursor-not-allowed transition" disabled>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">ফোন নম্বর</label>
+                                <input type="tel" name="phone" id="input-phone" required pattern="[0-9]{11}" placeholder="017xxxxxxxx" class="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 bg-white disabled:bg-gray-200 disabled:cursor-not-allowed transition" disabled>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">ঠিকানা</label>
+                                <textarea name="address" id="input-address" required rows="3" placeholder="বাড়ি নং, রোড, এলাকা, জেলা" class="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 bg-white disabled:bg-gray-200 disabled:cursor-not-allowed transition" disabled></textarea>
+                            </div>
+                        </div>
+
+                        <button type="submit" id="checkout-btn" class="btn-primary w-full py-4 rounded-lg font-bold mt-6 shadow-md flex justify-center items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transform active:scale-95 transition" disabled>
+                            অর্ডার নিশ্চিত করুন <i class="fas fa-check-circle"></i>
+                        </button>
+                    </form>
+                    
+                    <p class="text-xs text-center text-gray-400 mt-4 flex items-center justify-center gap-1">
+                        <i class="fas fa-lock"></i> আপনার তথ্য ১০০% সুরক্ষিত
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-white border-t border-gray-100 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 text-center reveal">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800">আমাদের গুড়ের এক ঝলক</h2>
+            <div class="w-20 h-1 bg-mango mx-auto rounded-full mt-3"></div>
+            <p class="text-gray-500 mt-4">বাগান থেকে আপনার টেবিল পর্যন্ত - সেরা মানের নিশ্চয়তা</p>
+        </div>
+
+        <div class="relative w-full max-w-6xl mx-auto overflow-hidden rounded-2xl shadow-2xl reveal delay-200">
+            
+            <div id="carousel-track" class="flex transition-transform duration-700 ease-in-out h-[300px] md:h-[450px]">
+                
+                <div class="w-full flex-shrink-0 relative group">
+                    <img src="assests/image1.png" alt="পাটালি গুড়" class="w-full h-full object-cover object-center">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 text-white translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                        <h3 class="text-xl font-bold">খাঁটি পাটালি গুড়</h3>
+                        <p class="text-sm opacity-90">শীতের পিঠার আসল স্বাদ</p>
+                    </div>
+                </div>
+
+                <div class="w-full flex-shrink-0 relative group">
+                    <img src="assests/iumage-2.png" alt="ঝোলা গুড়" class="w-full h-full object-cover object-center">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 text-white translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                        <h3 class="text-xl font-bold">সুস্বাদু ঝোলা গুড়</h3>
+                        <p class="text-sm opacity-90">চা কিংবা পায়েসের জন্য সেরা</p>
+                    </div>
+                </div>
+
+                <div class="w-full flex-shrink-0 relative group">
+                    <img src="assests/image-3.png" alt="মিক্সড কম্বো" class="w-full h-full object-cover object-center">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 text-white translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                        <h3 class="text-xl font-bold">ফ্যামিলি কম্বো প্যাক</h3>
+                        <p class="text-sm opacity-90">সবার পছন্দের সব গুড় একসাথে</p>
+                    </div>
+                </div>
+
+                <div class="w-full flex-shrink-0 relative group">
+                    <img src="assests/image-3.png" alt="প্রিমিয়াম প্যাক" class="w-full h-full object-cover object-center">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 text-white translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                        <h3 class="text-xl font-bold">প্রিমিয়াম গিফট বক্স</h3>
+                        <p class="text-sm opacity-90">প্রিয়জনকে দেওয়ার সেরা উপহার</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <button id="prev-btn" class="absolute top-1/2 left-4 -translate-y-1/2 bg-white/50 hover:bg-white p-3 rounded-full text-gray-800 shadow-lg backdrop-blur-sm transition opacity-0 hover:opacity-100 group-hover:opacity-100 md:opacity-0 z-10">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button id="next-btn" class="absolute top-1/2 right-4 -translate-y-1/2 bg-white/50 hover:bg-white p-3 rounded-full text-gray-800 shadow-lg backdrop-blur-sm transition opacity-0 hover:opacity-100 group-hover:opacity-100 md:opacity-0 z-10">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+
+            <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 z-10" id="carousel-indicators">
+                </div>
+
+        </div>
+    </section>
+
+
+    <footer id="contact" class="bg-gray-900 text-white py-12 mt-auto border-t-4 border-mango reveal">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-10">
+            <div>
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-gray-900 animate-pulse">
+                        <i class="fas fa-tree"></i>
+                    </div>
+                    <span class="text-xl font-bold">ম্যাংগো গার্ডেন</span>
+                </div>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    শীতের পিঠা উৎসবের জন্য সেরা মানের খেজুরের গুড় এখন আপনার হাতের নাগালে। ১০০% প্রাকৃতিক ও ভেজালমুক্ত।
+                </p>
+            </div>
+            
+            <div>
+                <h3 class="text-lg font-bold mb-4 text-gray-200 border-b border-gray-700 inline-block pb-1">যোগাযোগ</h3>
+                <ul class="space-y-3 text-gray-400 text-sm">
+                    <li class="hover:text-mango transition cursor-pointer"><i class="fas fa-phone-alt text-mango mr-2"></i> 01318-007554</li>
+                    <li class="hover:text-green-400 transition cursor-pointer"><i class="fab fa-whatsapp text-leaf mr-2"></i> 01318-007554</li>
+                    <li class="hover:text-white transition"><i class="fas fa-map-marker-alt text-mango mr-2"></i> রাজশাহী, বাংলাদেশ</li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-lg font-bold mb-4 text-gray-200 border-b border-gray-700 inline-block pb-1">সোশ্যাল মিডিয়া</h3>
+                <div class="flex space-x-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-[#1877F2] hover:scale-110 transition text-white">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-[#25D366] hover:scale-110 transition text-white">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center text-gray-600 text-xs mt-10 border-t border-gray-800 pt-6">
+            © ২০২৫ ম্যাংগো গার্ডেন। সর্বস্বত্ব সংরক্ষিত।
+        </div>
+    </footer>
+
+    <div class="bg-leaf text-white text-xs sm:text-sm py-3 border-t border-green-700 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] sticky bottom-0 z-40 transition-transform duration-300" id="bottom-bar">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center text-center sm:text-left gap-1">
+            <p class="font-medium flex items-center gap-2"><i class="fas fa-shield-alt text-yellow-300"></i> ১০০% খাঁটি গুড় ও ফ্রি ডেলিভারি</p>
+            <div class="flex space-x-4 font-semibold">
+                <a href="tel:01318007554" class="hover:text-yellow-200 transition"><i class="fas fa-phone-alt"></i> কল করুন</a>
+                <span>|</span>
+                <a href="https://wa.me/8801318007554" class="hover:text-yellow-200 transition"><i class="fab fa-whatsapp"></i> হোয়াটসঅ্যাপ</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. Fade In Animation on Scroll & Setup ---
+        window.dataLayer = window.dataLayer || [];
+        
+        // **FIX 1: Page View Event Added Here**
+        window.dataLayer.push({
+            event: "page_view",
+            page_type: "home_landing_page",
+            page_title: document.title,
+            currency: "BDT",
+            user_login_status: "guest"
+        });
+
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal(); // Trigger once on load
+
+        // --- 2. Mobile Menu Toggle ---
+        const btn = document.getElementById("mobile-menu-btn");
+        const menu = document.getElementById("mobile-menu");
+        const icon = btn.querySelector("i");
+
+        function toggleMobileMenu() {
+            menu.classList.toggle("hidden");
+            if(!menu.classList.contains("hidden")){
+                setTimeout(() => menu.classList.add("open"), 10);
+                icon.classList.remove("fa-bars");
+                icon.classList.add("fa-times");
+            } else {
+                menu.classList.remove("open");
+                icon.classList.remove("fa-times");
+                icon.classList.add("fa-bars");
+            }
+        }
+
+        btn.addEventListener("click", () => {
+             if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                setTimeout(() => {
+                    menu.classList.add('open');
+                }, 20);
+                icon.classList.remove("fa-bars");
+                icon.classList.add("fa-times");
+             } else {
+                menu.classList.remove('open');
+                menu.addEventListener('transitionend', function() {
+                    if(!menu.classList.contains('open')) {
+                        menu.classList.add('hidden');
+                    }
+                }, {once: true});
+                icon.classList.remove("fa-times");
+                icon.classList.add("fa-bars");
+             }
+        });
+
+        // --- 3. E-Commerce Logic ---
+        let cart = [];
+        let couponApplied = false;
+        const COUPON_CODE = "WINTER20";
+
+        function addToCart(id, name, price) {
+            cart.push({ id, name, price });
+            updateCartUI();
+            
+            // Animation for Button
+            const btn = event.currentTarget;
+            const originalHTML = btn.innerHTML;
+            
+            btn.innerHTML = '<i class="fas fa-check"></i> যুক্ত হয়েছে';
+            const isPrimary = btn.classList.contains('btn-primary');
+            
+            if(isPrimary) {
+                btn.classList.remove('btn-primary');
+                btn.classList.add('bg-gray-800', 'text-white');
+            } else {
+                btn.classList.add('bg-leaf', 'text-white');
+                btn.classList.remove('btn-add-cart'); 
+            }
+            
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                if(isPrimary) {
+                    btn.classList.add('btn-primary');
+                    btn.classList.remove('bg-gray-800', 'text-white');
+                } else {
+                    btn.classList.remove('bg-leaf', 'text-white');
+                    btn.classList.add('btn-add-cart');
+                }
+            }, 1000);
+
+            // Animate Cart Icon
+            const cartBadge = document.getElementById('cart-count');
+            cartBadge.classList.add('scale-150');
+            setTimeout(() => cartBadge.classList.remove('scale-150'), 200);
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cart-items-container');
+            const countBadge = document.getElementById('cart-count');
+            const subtotalEl = document.getElementById('subtotal');
+            const finalTotalEl = document.getElementById('final-total');
+            const checkoutBtn = document.getElementById('checkout-btn');
+            const discountRow = document.getElementById('discount-row');
+            
+            const inputName = document.getElementById('input-name');
+            const inputPhone = document.getElementById('input-phone');
+            const inputAddress = document.getElementById('input-address');
+            
+            let total = cart.reduce((sum, item) => sum + item.price, 0);
+            let discount = 0;
+
+            if (couponApplied) {
+                discount = 50; 
+                discountRow.style.display = 'flex';
+                document.getElementById('discount-val').innerText = '- ৳ ' + discount;
+            } else {
+                discountRow.style.display = 'none';
+            }
+
+            let payable = total - discount;
+
+            subtotalEl.innerText = '৳ ' + total.toFixed(0);
+            finalTotalEl.innerText = '৳ ' + payable.toFixed(0);
+            countBadge.innerText = cart.length;
+            
+            if (cart.length === 0) {
+                checkoutBtn.disabled = true;
+                checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                checkoutBtn.classList.remove('shadow-md');
+                inputName.disabled = true;
+                inputPhone.disabled = true;
+                inputAddress.disabled = true;
+                
+                container.innerHTML = `
+                    <div class="flex flex-col items-center justify-center h-40 text-gray-400 fade-in">
+                        <i class="fas fa-basket-shopping text-4xl mb-2 opacity-30 text-leaf"></i>
+                        <p>আপনার কার্ট বর্তমানে খালি</p>
+                        <p class="text-sm">পছন্দের কম্বো অর্ডার করতে উপরে দেখুন</p>
+                    </div>
+                `;
+            } else {
+                checkoutBtn.disabled = false;
+                checkoutBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                checkoutBtn.classList.add('shadow-md');
+                inputName.disabled = false;
+                inputPhone.disabled = false;
+                inputAddress.disabled = false;
+
+                container.innerHTML = cart.map((item, index) => `
+                    <div class="flex justify-between items-center bg-white p-3 rounded-lg border border-gray-100 shadow-sm hover:border-green-200 transition duration-300 transform hover:translate-x-1">
+                        <div class="flex items-center gap-3">
+                            <div class="w-6 h-6 rounded-full bg-green-50 flex items-center justify-center text-leaf text-xs font-bold">
+                                ${index + 1}
+                            </div>
+                            <div>
+                                <p class="font-bold text-sm text-gray-800">${item.name}</p>
+                                <p class="text-xs text-gray-500">৳ ${item.price}</p>
+                            </div>
+                        </div>
+                        <button onclick="removeFromCart(${index})" class="text-gray-400 hover:text-red-500 w-8 h-8 flex items-center justify-center rounded-full hover:bg-red-50 transition">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            if (cart.length === 0) couponApplied = false;
+            updateCartUI();
+        }
+
+        function applyCoupon() {
+            const input = document.getElementById('coupon-code-input').value.toUpperCase();
+            if (input === COUPON_CODE) {
+                if (cart.length > 0) {
+                    couponApplied = true;
+                    alert("৫০ টাকা ডিসকাউন্ট যুক্ত হয়েছে!");
+                    updateCartUI();
+                } else {
+                    alert("কার্ট খালি!");
+                }
+            } else {
+                alert("ভুল কুপন কোড!");
+                couponApplied = false;
+                updateCartUI();
+            }
+        }
+
+        function submitOrder(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const name = formData.get('name');
+            const phone = formData.get('phone');
+            const address = formData.get('address');
+            const total = document.getElementById('final-total').innerText;
+            
+            let payAmount = parseFloat(total.replace(/[^\d.]/g, '')) || 0;
+            let transactionId = "MGD" + Math.floor(Math.random() * 1000000); 
+
+            // **FIX 2: Purchase Event with Customer Info**
+            window.dataLayer.push({
+                event: "purchase",
+                ecommerce: {
+                    transaction_id: transactionId,
+                    affiliation: "Mango Garden Online Store",
+                    value: payAmount,
+                    tax: 0,
+                    shipping: 0,
+                    currency: "BDT",
+                    coupon: couponApplied ? COUPON_CODE : "",
+                    items: cart.map(item => ({
+                        item_name: item.name,
+                        item_id: item.id,
+                        price: item.price,
+                        currency: "BDT",
+                        item_brand: "Mango Garden",
+                        item_category: "Gur Combos",
+                        quantity: 1
+                    }))
+                },
+                // Customer Info added for Enhanced Conversions
+                customer_info: {
+                    billing_name: name,
+                    billing_phone: phone,
+                    billing_address: address,
+                    country: "BD"
+                }
+            });
+
+            // LocalStorage Save
+            let existingOrders = JSON.parse(localStorage.getItem('mango_orders')) || [];
+            let newOrder = {
+                id: transactionId,
+                name: name,
+                phone: phone,
+                address: address,
+                items: cart,
+                total: total,
+                date: new Date().toLocaleString()
+            };
+            existingOrders.push(newOrder);
+            localStorage.setItem('mango_orders', JSON.stringify(existingOrders));
+            
+            // Cleanup and Redirect
+            cart = [];
+            couponApplied = false;
+            updateCartUI();
+            e.target.reset();
+            
+            // **FIX 3: Redirect Delay**
+            setTimeout(() => {
+                window.location.href = `success.html?id=${transactionId}&name=${encodeURIComponent(name)}&total=${encodeURIComponent(total)}`;
+            }, 1000);
+        }
+               document.addEventListener('DOMContentLoaded', function() {
+            const track = document.getElementById('carousel-track');
+            const slides = Array.from(track.children);
+            const nextBtn = document.getElementById('next-btn');
+            const prevBtn = document.getElementById('prev-btn');
+            const indicatorsContainer = document.getElementById('carousel-indicators');
+            
+            let currentIndex = 0;
+            const slideWidth = slides[0].getBoundingClientRect().width;
+            const intervalTime = 3000; // 3 Seconds per slide
+            let autoSlideInterval;
+
+            // Arrange slides next to each other
+            slides.forEach((slide, index) => {
+                slide.style.left = slideWidth * index + 'px';
+                slide.style.position = 'absolute';
+                
+                // Create Indicators
+                const dot = document.createElement('button');
+                dot.classList.add('w-3', 'h-3', 'rounded-full', 'bg-white/50', 'transition');
+                if (index === 0) dot.classList.add('bg-mango', 'w-8'); // Active dot style
+                indicatorsContainer.appendChild(dot);
+            });
+
+            const indicators = Array.from(indicatorsContainer.children);
+
+            const updateCarousel = (index) => {
+                // Move Track
+                track.style.transform = 'translateX(-' + (slideWidth * index) + 'px)';
+                
+                // Update Indicators
+                indicators.forEach(dot => {
+                    dot.classList.remove('bg-mango', 'w-8');
+                    dot.classList.add('bg-white/50');
+                });
+                indicators[index].classList.remove('bg-white/50');
+                indicators[index].classList.add('bg-mango', 'w-8');
+                
+                currentIndex = index;
+            };
+
+            const nextSlide = () => {
+                let nextIndex = currentIndex + 1;
+                if (nextIndex >= slides.length) {
+                    nextIndex = 0; // Loop back to start
+                }
+                updateCarousel(nextIndex);
+            };
+
+            const prevSlide = () => {
+                let prevIndex = currentIndex - 1;
+                if (prevIndex < 0) {
+                    prevIndex = slides.length - 1; // Loop to end
+                }
+                updateCarousel(prevIndex);
+            };
+
+            // Button Event Listeners
+            nextBtn.addEventListener('click', () => {
+                nextSlide();
+                resetAutoSlide();
+            });
+            prevBtn.addEventListener('click', () => {
+                prevSlide();
+                resetAutoSlide();
+            });
+            
+            // Indicator Click Listeners
+            indicators.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    updateCarousel(index);
+                    resetAutoSlide();
+                });
+            });
+
+            // Auto Slide Functionality
+            const startAutoSlide = () => {
+                autoSlideInterval = setInterval(nextSlide, intervalTime);
+            };
+
+            const resetAutoSlide = () => {
+                clearInterval(autoSlideInterval);
+                startAutoSlide();
+            };
+
+            // Start automatically
+            startAutoSlide();
+
+            // Pause on hover (Optional - if you want it)
+            track.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
+            track.addEventListener('mouseleave', startAutoSlide);
+            
+            // Handle Resize
+            window.addEventListener('resize', () => {
+                const newSlideWidth = slides[0].getBoundingClientRect().width;
+                slides.forEach((slide, index) => {
+                    slide.style.left = newSlideWidth * index + 'px';
+                });
+                updateCarousel(currentIndex);
+            });
+        });
+    </script>
+</body>
+</html>
