@@ -905,6 +905,30 @@
                 // 6. Set Cooldown on Success
                 localStorage.setItem('lastOrderTime', currentTime.toString());
 
+                // --- DATA LAYER FIX STARTS HERE ---
+                // Prepare Data for GTM (Success Page will read this)
+                let cleanTotal = parseFloat(total.replace(/[^\d.]/g, ''));
+                let analyticsItems = cart.map(item => ({
+                    item_id: item.id,
+                    item_name: item.name,
+                    price: item.price,
+                    quantity: 1
+                }));
+
+                // Save to LocalStorage for retrieval on success.html
+                localStorage.setItem('purchaseData', JSON.stringify({
+                    transaction_id: orderId,
+                    value: cleanTotal,
+                    currency: "BDT",
+                    items: analyticsItems,
+                    customer: {
+                        name: name,
+                        phone: phone,
+                        address: address
+                    }
+                }));
+                // --- DATA LAYER FIX ENDS HERE ---
+
                 localStorage.removeItem('mango_orders');
                 cart = [];
                 updateCartUI();

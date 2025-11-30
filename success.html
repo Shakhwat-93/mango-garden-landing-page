@@ -70,7 +70,35 @@
         document.getElementById('customer-name').innerText = urlParams.get('name') || 'Guest';
         document.getElementById('total-amount').innerText = urlParams.get('total') || '৳ 0';
         
-        // Optional: Clear Cart when seeing this page
+        // --- DATA LAYER PUSH (FIXED) ---
+        const purchaseDataString = localStorage.getItem('purchaseData');
+
+        if (purchaseDataString) {
+            try {
+                const purchaseData = JSON.parse(purchaseDataString);
+
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    'event': 'purchase',
+                    'ecommerce': {
+                        'currency': purchaseData.currency,
+                        'value': purchaseData.value,
+                        'transaction_id': purchaseData.transaction_id,
+                        'items': purchaseData.items
+                    },
+                    'user_data': purchaseData.customer
+                });
+                
+                // Clear data to prevent duplicate triggers on reload
+                localStorage.removeItem('purchaseData');
+                console.log('Purchase data pushed to Data Layer');
+
+            } catch (e) {
+                console.error('Error parsing purchase data', e);
+            }
+        }
+
+        // Clear Cart
         localStorage.removeItem('cart'); 
     </script>
 
