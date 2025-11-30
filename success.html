@@ -70,7 +70,7 @@
         document.getElementById('customer-name').innerText = urlParams.get('name') || 'Guest';
         document.getElementById('total-amount').innerText = urlParams.get('total') || '৳ 0';
         
-        // --- DATA LAYER PUSH (FIXED) ---
+        // --- DATA LAYER PUSH (FIXED FOR FULL CUSTOMER DATA) ---
         const purchaseDataString = localStorage.getItem('purchaseData');
 
         if (purchaseDataString) {
@@ -80,18 +80,30 @@
                 window.dataLayer = window.dataLayer || [];
                 window.dataLayer.push({
                     'event': 'purchase',
+                    // Ecommerce Data
                     'ecommerce': {
                         'currency': purchaseData.currency,
                         'value': purchaseData.value,
                         'transaction_id': purchaseData.transaction_id,
                         'items': purchaseData.items
                     },
-                    'user_data': purchaseData.customer
+                    // --- Full Customer Data (Top Level - Easy to pick in GTM) ---
+                    'customer_name': purchaseData.customer.name,
+                    'customer_phone': purchaseData.customer.phone,
+                    'customer_address': purchaseData.customer.address,
+                    // --- User Data Object (For Enhanced Conversions) ---
+                    'user_data': {
+                        'phone_number': purchaseData.customer.phone,
+                        'address': {
+                            'first_name': purchaseData.customer.name,
+                            'street': purchaseData.customer.address
+                        }
+                    }
                 });
                 
                 // Clear data to prevent duplicate triggers on reload
                 localStorage.removeItem('purchaseData');
-                console.log('Purchase data pushed to Data Layer');
+                console.log('Purchase data pushed to Data Layer (Including Customer Info)');
 
             } catch (e) {
                 console.error('Error parsing purchase data', e);
