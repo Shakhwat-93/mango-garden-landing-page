@@ -76,6 +76,12 @@
             box-shadow: 0 4px 12px rgba(74, 44, 42, 0.3);
         }
 
+        /* Disabled Button Style override for this specific requirement */
+        button:disabled {
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
         .btn-primary {
             background-color: #4A2C2A;
             color: white;
@@ -627,11 +633,17 @@
             updateCartUI();
             
             const btn = event.currentTarget;
-            const originalHTML = btn.innerHTML;
             
+            // --- NEW: DISABLE BUTTON LOGIC START ---
+            
+            // 1. Disable the button immediately
+            btn.disabled = true;
+            
+            // 2. Change text permanently
             btn.innerHTML = '<i class="fas fa-check"></i> যুক্ত হয়েছে';
-            const isPrimary = btn.classList.contains('btn-primary');
             
+            // 3. Change Style permanently (Removed the setTimeout revert logic)
+            const isPrimary = btn.classList.contains('btn-primary');
             if(isPrimary) {
                 btn.classList.remove('btn-primary');
                 btn.classList.add('bg-gray-800', 'text-white');
@@ -639,21 +651,13 @@
                 btn.classList.add('bg-gur', 'text-white');
                 btn.classList.remove('btn-add-cart'); 
             }
-            
-            setTimeout(() => {
-                btn.innerHTML = originalHTML;
-                if(isPrimary) {
-                    btn.classList.add('btn-primary');
-                    btn.classList.remove('bg-gray-800', 'text-white');
-                } else {
-                    btn.classList.remove('bg-gur', 'text-white');
-                    btn.classList.add('btn-add-cart');
-                }
-            }, 1000);
 
+            // 4. Add scale effect for cart badge
             const cartBadge = document.getElementById('cart-count');
             cartBadge.classList.add('scale-150');
             setTimeout(() => cartBadge.classList.remove('scale-150'), 200);
+
+            // --- NEW: DISABLE BUTTON LOGIC END ---
         }
 
         function updateCartUI() {

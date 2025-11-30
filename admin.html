@@ -161,14 +161,15 @@
                                     <th class="p-4">তারিখ</th>
                                     <th class="p-4">আইডি</th>
                                     <th class="p-4">কাস্টমার</th>
+                                    <th class="p-4">মোবাইল</th>
                                     <th class="p-4">ঠিকানা</th>
                                     <th class="p-4">পণ্য</th>
                                     <th class="p-4">বিল</th>
-                                    <th class="p-4 text-center">স্ট্যাটাস</th> <th class="p-4 text-center">অ্যাকশন</th>
-                                </tr>
+                                    <th class="p-4 text-center">স্ট্যাটাস</th> 
+                                    </tr>
                             </thead>
                             <tbody id="order-table-body" class="text-sm text-gray-700 divide-y divide-orange-100">
-                                </tbody>
+                            </tbody>
                         </table>
                     </div>
                     <div id="no-data-msg" class="p-8 text-center text-gray-400 hidden">
@@ -233,10 +234,9 @@
             fetch(SHEET_API_URL)
             .then(response => response.json())
             .then(data => {
-                // ** Mock Status Simulation ** // যেহেতু API তে স্ট্যাটাস নেই, আমরা ডেমোর জন্য প্রত্যেক অর্ডারে 'Pending' বা র‍্যান্ডম স্ট্যাটাস বসাবো
                 allOrders = data.map(order => ({
                     ...order,
-                    status: localStorage.getItem(`status_${order.id}`) || 'pending' // লোকাল স্টোরেজ থেকে স্ট্যাটাস চেক করবে, না থাকলে 'pending'
+                    status: localStorage.getItem(`status_${order.id}`) || 'pending'
                 })).reverse();
 
                 renderTable(allOrders);
@@ -276,11 +276,19 @@
                 if(order.status === 'complete') statusClass = 'status-complete';
                 if(order.status === 'failed') statusClass = 'status-failed';
 
+                // নতুন স্ট্রাকচার: কল বাটন সরানো হয়েছে এবং ফোন নাম্বার আলাদা কলামে দেখানো হয়েছে
                 const row = `
                     <tr class="hover:bg-orange-50 transition border-b border-orange-50">
                         <td class="p-4 text-xs text-gray-500">${dateDisplay}</td>
                         <td class="p-4 font-mono text-xs text-gur font-bold">#${order.id}</td>
                         <td class="p-4 font-bold text-[#3E2723]">${order.name}</td>
+                        
+                        <td class="p-4 font-mono text-sm text-[#5D4037]">
+                            <a href="tel:${cleanPhone}" class="hover:text-blue-600 hover:underline" title="কল করতে ক্লিক করুন">
+                                ${order.phone}
+                            </a>
+                        </td>
+
                         <td class="p-4 max-w-xs truncate text-[#5D4037] text-xs" title="${order.address}">${order.address}</td>
                         <td class="p-4 max-w-xs truncate text-xs text-gray-500" title="${order.items}">${order.items}</td>
                         <td class="p-4 font-bold text-green-700">${order.total}</td>
@@ -293,13 +301,7 @@
                                 <option value="failed" ${order.status === 'failed' ? 'selected' : ''}>Failed</option>
                             </select>
                         </td>
-
-                        <td class="p-4 text-center">
-                            <a href="tel:${cleanPhone}" class="bg-green-100 text-green-700 hover:bg-green-600 hover:text-white px-3 py-1 rounded-full text-xs font-bold transition inline-flex items-center">
-                                <i class="fas fa-phone-alt mr-1"></i> কল
-                            </a>
-                        </td>
-                    </tr>
+                        </tr>
                 `;
                 tableBody.innerHTML += row;
             });
@@ -307,15 +309,11 @@
 
         // --- Logic: Change Status ---
         function changeStatus(id, newStatus) {
-            // Update Local Data
             const orderIndex = allOrders.findIndex(o => o.id == id);
             if(orderIndex > -1) {
                 allOrders[orderIndex].status = newStatus;
-                // Save to Local Storage so it persists on refresh (Browser only)
                 localStorage.setItem(`status_${id}`, newStatus);
-                
-                // Re-render UI
-                filterTable(); // Re-apply filter if active
+                filterTable(); 
                 updateDashboardMetrics(allOrders);
                 updateChart(allOrders);
             }
