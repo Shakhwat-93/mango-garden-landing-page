@@ -17,22 +17,19 @@
         
         body {
             font-family: 'Hind Siliguri', sans-serif;
-            background-color: #FFF8E7; /* Warm Cream Background */
-            color: #3E2723; /* Dark Brown Text */
+            background-color: #FFF8E7;
+            color: #3E2723;
             overflow-x: hidden;
         }
 
-        /* --- New Color Palette (GUR THEME) --- */
-        /* Dark Brown (Patali Gur Color) */
+        /* Color Config */
         .text-gur { color: #4A2C2A; } 
         .bg-gur { background-color: #4A2C2A; }
         .border-gur { border-color: #4A2C2A; }
-        
-        /* Gold/Mango Accent */
         .text-mango { color: #D97706; }
         .bg-mango { background-color: #F59E0B; }
         
-        /* Product Card Styles */
+        /* Components */
         .product-card {
             background: white;
             border: 1px solid #E7E5E4;
@@ -45,11 +42,10 @@
         }
         .product-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 30px -10px rgba(74, 44, 42, 0.15); /* Brown shadow */
+            box-shadow: 0 20px 30px -10px rgba(74, 44, 42, 0.15);
             border-color: #4A2C2A;
         }
         
-        /* Button Styles */
         .btn-add-cart {
             background-color: #F5F5F4;
             color: #3E2723;
@@ -57,13 +53,13 @@
             transition: all 0.3s ease;
         }
         .product-card:hover .btn-add-cart {
-            background-color: #4A2C2A; /* Dark Brown */
+            background-color: #4A2C2A;
             color: white;
             box-shadow: 0 4px 12px rgba(74, 44, 42, 0.3);
         }
 
         .btn-primary {
-            background-color: #4A2C2A; /* Dark Brown */
+            background-color: #4A2C2A;
             color: white;
             transition: all 0.3s ease;
         }
@@ -73,7 +69,6 @@
             box-shadow: 0 5px 15px rgba(62, 39, 35, 0.4);
         }
 
-        /* Cart Box Style */
         .cart-box {
             background: white;
             border-radius: 16px;
@@ -82,7 +77,6 @@
             transition: transform 0.3s ease;
         }
 
-        /* Custom List Bullet */
         .combo-list li {
             position: relative;
             padding-left: 24px;
@@ -96,19 +90,18 @@
             font-weight: 900;
             position: absolute;
             left: 0;
-            color: #4A2C2A; /* Brown tick */
+            color: #4A2C2A;
             font-size: 0.8rem;
             top: 4px;
         }
         
-        /* Disabled Input Style */
         .disabled-input {
             background-color: #f9fafb;
             cursor: not-allowed;
             opacity: 0.7;
         }
 
-        /* --- Animations (Fade In Up) --- */
+        /* FX */
         .reveal {
             position: relative;
             transform: translateY(50px);
@@ -120,7 +113,6 @@
             opacity: 1;
         }
 
-        /* Mobile Menu Animation */
         #mobile-menu {
             transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
             max-height: 0;
@@ -576,9 +568,8 @@
     </div>
 
     <script>
-        // --- 1. Fade In Animation on Scroll & Setup ---
+        // --- Setup & Animation ---
         window.dataLayer = window.dataLayer || [];
-        
         window.dataLayer.push({
             event: "page_view",
             page_type: "home_landing_page",
@@ -587,6 +578,7 @@
             user_login_status: "guest"
         });
 
+        // Scroll Reveal
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
@@ -599,9 +591,9 @@
             }
         }
         window.addEventListener("scroll", reveal);
-        reveal(); // Trigger once on load
+        reveal();
 
-        // --- 2. Mobile Menu Toggle ---
+        // --- Mobile Menu ---
         const btn = document.getElementById("mobile-menu-btn");
         const menu = document.getElementById("mobile-menu");
         const icon = btn.querySelector("i");
@@ -639,16 +631,18 @@
              }
         });
 
-        // --- 3. E-Commerce Logic ---
+        // --- Cart Logic ---
         let cart = [];
         let couponApplied = false;
         const COUPON_CODE = "WINTER20";
+
+        // Google Apps Script URL
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxqrBdrBYGcL7NqZlqS-cgAksCNh3XEyi3A2_TGP_TarlRa2gDX1w9L1e78QxD-LS_H8Q/exec";
 
         function addToCart(id, name, price) {
             cart.push({ id, name, price });
             updateCartUI();
             
-            // Animation for Button
             const btn = event.currentTarget;
             const originalHTML = btn.innerHTML;
             
@@ -674,7 +668,6 @@
                 }
             }, 1000);
 
-            // Animate Cart Icon
             const cartBadge = document.getElementById('cart-count');
             cartBadge.classList.add('scale-150');
             setTimeout(() => cartBadge.classList.remove('scale-150'), 200);
@@ -776,66 +769,67 @@
 
         function submitOrder(e) {
             e.preventDefault();
+            
+            // Validate cart
+            if (cart.length === 0) {
+                alert("কার্ট খালি!");
+                return;
+            }
+
+            const checkoutBtn = document.getElementById('checkout-btn');
+            const originalBtnText = checkoutBtn.innerHTML;
+            
+            // UI Feedback
+            checkoutBtn.disabled = true;
+            checkoutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> প্রসেসিং হচ্ছে...';
+
             const formData = new FormData(e.target);
             const name = formData.get('name');
             const phone = formData.get('phone');
             const address = formData.get('address');
             const total = document.getElementById('final-total').innerText;
             
-            let payAmount = parseFloat(total.replace(/[^\d.]/g, '')) || 0;
-            let transactionId = "MGD" + Math.floor(Math.random() * 1000000); 
+            // Format Data
+            const itemsList = cart.map(item => `${item.name} (${item.price})`).join(', ');
+            const orderId = "MGD" + Math.floor(Math.random() * 1000000);
 
-            window.dataLayer.push({
-                event: "purchase",
-                ecommerce: {
-                    transaction_id: transactionId,
-                    affiliation: "Mango Garden Online Store",
-                    value: payAmount,
-                    tax: 0,
-                    shipping: 0,
-                    currency: "BDT",
-                    coupon: couponApplied ? COUPON_CODE : "",
-                    items: cart.map(item => ({
-                        item_name: item.name,
-                        item_id: item.id,
-                        price: item.price,
-                        currency: "BDT",
-                        item_brand: "Mango Garden",
-                        item_category: "Gur Combos",
-                        quantity: 1
-                    }))
-                },
-                customer_info: {
-                    billing_name: name,
-                    billing_phone: phone,
-                    billing_address: address,
-                    country: "BD"
-                }
-            });
-
-            let existingOrders = JSON.parse(localStorage.getItem('mango_orders')) || [];
-            let newOrder = {
-                id: transactionId,
+            const orderData = {
+                id: orderId,
                 name: name,
-                phone: phone,
+                phone: "'" + phone,
                 address: address,
-                items: cart,
-                total: total,
-                date: new Date().toLocaleString()
+                items: itemsList,
+                total: total
             };
-            existingOrders.push(newOrder);
-            localStorage.setItem('mango_orders', JSON.stringify(existingOrders));
-            
-            cart = [];
-            couponApplied = false;
-            updateCartUI();
-            e.target.reset();
-            
-            setTimeout(() => {
-                window.location.href = `success.html?id=${transactionId}&name=${encodeURIComponent(name)}&total=${encodeURIComponent(total)}`;
-            }, 1000);
+
+            // Send to Google Sheet
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'text/plain'
+                },
+                body: JSON.stringify(orderData)
+            })
+            .then(response => {
+                // Clear local data
+                localStorage.removeItem('mango_orders');
+                cart = [];
+                updateCartUI();
+                e.target.reset();
+                
+                // Redirect
+                window.location.href = `success.html?id=${orderId}&name=${encodeURIComponent(name)}&total=${encodeURIComponent(total)}`;
+            })
+            .catch(error => {
+                console.error('Error!', error.message);
+                alert("দুঃখিত! সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+                checkoutBtn.disabled = false;
+                checkoutBtn.innerHTML = originalBtnText;
+            });
         }
 
+        // --- Carousel Logic ---
         document.addEventListener('DOMContentLoaded', function() {
             const track = document.getElementById('carousel-track');
             const slides = Array.from(track.children);
