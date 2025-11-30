@@ -767,10 +767,41 @@
             }
         }
 
-        function submitOrder(e) {
+        // --- Security & Spam Prevention Config ---
+        const ORDER_COOLDOWN_TIME = 3 * 60 * 60 * 1000; // ৩ ঘণ্টা
+
+        // --- IP Fetch Helper ---
+        async function getUserIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                return data.ip;
+            } catch (error) {
+                console.error('IP Error:', error);
+                return 'Unknown IP';
+            }
+        }
+
+        // --- Main Order Function with Security ---
+        async function submitOrder(e) {
             e.preventDefault();
             
-            // Validate cart
+            // 1. Check Spam / Cooldown
+            const lastOrderTime = localStorage.getItem('lastOrderTime');
+            const currentTime = new Date().getTime();
+
+            if (lastOrderTime) {
+                const timeDiff = currentTime - parseInt(lastOrderTime);
+                if (timeDiff < ORDER_COOLDOWN_TIME) {
+                    const remainingTime = Math.ceil((ORDER_COOLDOWN_TIME - timeDiff) / (1000 * 60));
+                    const hours = Math.floor(remainingTime / 60);
+                    const minutes = remainingTime % 60;
+                    alert(`দুঃখিত! স্প্যাম রোধে আমরা একটি ডিভাইস থেকে ঘনঘন অর্ডার নিচ্ছি না। \nদয়া করে ${hours} ঘণ্টা ${minutes} মিনিট পর আবার চেষ্টা করুন। \nঅথবা আমাদের নাম্বারে কল করুন।`);
+                    return; 
+                }
+            }
+
+            // 2. Validate Cart
             if (cart.length === 0) {
                 alert("কার্ট খালি!");
                 return;
@@ -779,9 +810,12 @@
             const checkoutBtn = document.getElementById('checkout-btn');
             const originalBtnText = checkoutBtn.innerHTML;
             
-            // UI Feedback
             checkoutBtn.disabled = true;
-            checkoutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> প্রসেসিং হচ্ছে...';
+            checkoutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> সিকিউরিটি চেক...';
+
+            // 3. Fetch IP
+            const userIP = await getUserIP();
+            checkoutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> অর্ডার প্রসেসিং...';
 
             const formData = new FormData(e.target);
             const name = formData.get('name');
@@ -789,20 +823,23 @@
             const address = formData.get('address');
             const total = document.getElementById('final-total').innerText;
             
-            // Format Data
             const itemsList = cart.map(item => `${item.name} (${item.price})`).join(', ');
             const orderId = "MGD" + Math.floor(Math.random() * 1000000);
 
+            // 4. Prepare Data with IP
             const orderData = {
                 id: orderId,
+                date: new Date().toLocaleString(),
                 name: name,
                 phone: "'" + phone,
                 address: address,
                 items: itemsList,
-                total: total
+                total: total,
+                ip: userIP, // Added IP field
+                status: 'Pending'
             };
 
-            // Send to Google Sheet
+            // 5. Send to Google Sheet
             fetch(SCRIPT_URL, {
                 method: 'POST',
                 mode: 'no-cors',
@@ -812,18 +849,19 @@
                 body: JSON.stringify(orderData)
             })
             .then(response => {
-                // Clear local data
+                // 6. Set Cooldown on Success
+                localStorage.setItem('lastOrderTime', currentTime.toString());
+
                 localStorage.removeItem('mango_orders');
                 cart = [];
                 updateCartUI();
                 e.target.reset();
                 
-                // Redirect
                 window.location.href = `success.html?id=${orderId}&name=${encodeURIComponent(name)}&total=${encodeURIComponent(total)}`;
             })
             .catch(error => {
                 console.error('Error!', error.message);
-                alert("দুঃখিত! সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+                alert("দুঃখিত! সমস্যা হয়েছে। আবার চেষ্টা করুন।");
                 checkoutBtn.disabled = false;
                 checkoutBtn.innerHTML = originalBtnText;
             });
