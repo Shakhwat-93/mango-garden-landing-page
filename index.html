@@ -10,6 +10,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ম্যাংগো গার্ডেন | উইন্টার স্পেশাল কম্বো</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
@@ -20,6 +23,19 @@
             background-color: #FFF8E7;
             color: #3E2723;
             overflow-x: hidden;
+        }
+
+        /* SweetAlert Font Override to match website */
+        div:where(.swal2-container) {
+            font-family: 'Hind Siliguri', sans-serif !important;
+            z-index: 9999 !important;
+        }
+        .swal2-popup {
+            border-radius: 15px !important;
+            border: 2px solid #4A2C2A !important;
+        }
+        .swal2-title {
+            color: #3E2723 !important;
         }
 
         /* Color Config */
@@ -755,13 +771,34 @@
             if (input === COUPON_CODE) {
                 if (cart.length > 0) {
                     couponApplied = true;
-                    alert("৫০ টাকা ডিসকাউন্ট যুক্ত হয়েছে!");
+                    // Custom Alert Success
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'অভিনন্দন!',
+                        text: '৫০ টাকা ডিসকাউন্ট যুক্ত হয়েছে!',
+                        confirmButtonColor: '#4A2C2A',
+                        confirmButtonText: 'ধন্যবাদ'
+                    });
                     updateCartUI();
                 } else {
-                    alert("কার্ট খালি!");
+                    // Custom Alert Empty Cart
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'কার্ট খালি!',
+                        text: 'আগে পছন্দের কম্বো কার্টে যুক্ত করুন।',
+                        confirmButtonColor: '#4A2C2A',
+                        confirmButtonText: 'ঠিক আছে'
+                    });
                 }
             } else {
-                alert("ভুল কুপন কোড!");
+                // Custom Alert Error
+                Swal.fire({
+                    icon: 'error',
+                    title: 'ভুল কোড!',
+                    text: 'দুঃখিত, এই কুপন কোডটি সঠিক নয়।',
+                    confirmButtonColor: '#d33',
+                    confirmButtonText: 'আবার চেষ্টা করুন'
+                });
                 couponApplied = false;
                 updateCartUI();
             }
@@ -796,14 +833,28 @@
                     const remainingTime = Math.ceil((ORDER_COOLDOWN_TIME - timeDiff) / (1000 * 60));
                     const hours = Math.floor(remainingTime / 60);
                     const minutes = remainingTime % 60;
-                    alert(`দুঃখিত! স্প্যাম রোধে আমরা একটি ডিভাইস থেকে ঘনঘন অর্ডার নিচ্ছি না। \nদয়া করে ${hours} ঘণ্টা ${minutes} মিনিট পর আবার চেষ্টা করুন। \nঅথবা আমাদের নাম্বারে কল করুন।`);
+                    
+                    // Custom Alert Spam Block
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'দুঃখিত!',
+                        html: `স্প্যাম রোধে আমরা একটি ডিভাইস থেকে ঘনঘন অর্ডার নিচ্ছি না।<br><br>দয়া করে <b>${hours} ঘণ্টা ${minutes} মিনিট</b> পর আবার চেষ্টা করুন।<br>অথবা আমাদের নাম্বারে কল করুন।`,
+                        confirmButtonColor: '#4A2C2A',
+                        confirmButtonText: 'ঠিক আছে'
+                    });
                     return; 
                 }
             }
 
             // 2. Validate Cart
             if (cart.length === 0) {
-                alert("কার্ট খালি!");
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'কার্ট খালি!',
+                    text: 'অর্ডার করতে অন্তত একটি কম্বো সিলেক্ট করুন।',
+                    confirmButtonColor: '#4A2C2A',
+                    confirmButtonText: 'ঠিক আছে'
+                });
                 return;
             }
 
@@ -861,7 +912,16 @@
             })
             .catch(error => {
                 console.error('Error!', error.message);
-                alert("দুঃখিত! সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+                
+                // Custom Alert Error
+                Swal.fire({
+                    icon: 'error',
+                    title: 'সমস্যা হয়েছে!',
+                    text: 'ইন্টারনেট সংযোগ চেক করে আবার চেষ্টা করুন।',
+                    confirmButtonColor: '#d33',
+                    confirmButtonText: 'চেষ্টা করুন'
+                });
+
                 checkoutBtn.disabled = false;
                 checkoutBtn.innerHTML = originalBtnText;
             });
